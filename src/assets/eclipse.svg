@@ -1,0 +1,14 @@
+<svg id="_2" data-name="2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 390.36">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <title>eclipse_final</title>
+  <g id="Shape">
+    <circle id="Small" class="cls-1" cx="121.64" cy="196.29" r="121.64"/>
+    <path id="Large" class="cls-1" d="M1084.82,828.82A194.62,194.62,0,0,0,942.64,890.3a143.9,143.9,0,0,1,0,267.41,194.62,194.62,0,0,0,142.18,61.48c107.79,0,195.18-87.38,195.18-195.18S1192.62,828.82,1084.82,828.82Z" transform="translate(-768 -828.82)"/>
+  </g>
+</svg>

@@ -1,0 +1,23 @@
+[
+  {
+    "symbol": "AAPL",
+    "name": "Apple Inc.",
+    "shares": 10,
+    "average": 100,
+    "buyDate": "2023-01-15"
+  },
+  {
+    "symbol": "MSFT",
+    "name": "Microsoft Corp.",
+    "shares": 5,
+    "average": 280.5,
+    "buyDate": "2023-03-10"
+  },
+  {
+    "symbol": "GOOGL",
+    "name": "Alphabet Inc.",
+    "shares": 3,
+    "average": 105.75,
+    "buyDate": "2022-11-20"
+  }
+]
