@@ -32,16 +32,16 @@
             {{ position.entryDate }}
           </td>
           <td class="w-[150px] h-[50px] p-[10px] table-border-r">
-            {{ position.entryPrice }}
+            {{ formatCurrency(position.entryPrice, position.currency) }}
           </td>
           <td class="w-[150px] h-[50px] p-[10px] table-border-r">
             {{ position.exitDate }}
           </td>
           <td class="w-[150px] h-[50px] p-[10px] table-border-r">
-            {{ position.exitPrice }}
+            {{ formatCurrency(position.exitPrice, position.currency) }}
           </td>
           <td :class="['w-[150px] h-[50px] p-[10px] table-border-r', getReturnColor(position.return)]">
-             {{ position.returnPercent }}
+            {{ formatPercent(position.returnPercent) }}
           </td>
         </tr>
         <tr v-if="!positions || positions.length === 0">
@@ -55,7 +55,7 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
+import { formatCurrency, formatPercent } from '@/utils/calculations.js'
 
 defineProps({
   positions: {
@@ -74,20 +74,6 @@ function formatDate(dateString) {
   } catch (e) {
       return dateString; // Return original if formatting fails
   }
-}
-
-// Example: Format currency
-function formatCurrency(value) {
-  if (value === null || value === undefined) return ''
-   // Basic formatting, adjust currency symbol and precision as needed
-  return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
-}
-
-// Example: Format return (e.g., percentage)
-function formatReturn(value) {
-    if (value === null || value === undefined) return 'N/A';
-    // Assuming return is a decimal value (e.g., 0.10 for 10%)
-    return (value * 100).toFixed(2) + '%';
 }
 
 // Example: Get color based on return value

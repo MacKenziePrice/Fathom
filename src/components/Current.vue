@@ -32,16 +32,16 @@
             {{ position.entryDate }}
           </td>
           <td class="w-[150px] h-[50px] p-[10px] table-border-r">
-            {{ position.entryPrice }}
+            {{ formatCurrency(position.entryPrice, position.currency) }}
           </td>
           <td class="w-[150px] h-[50px] p-[10px] table-border-r">
-            {{ position.currentPrice }}
+            {{ formatCurrency(position.currentPrice, position.currency) }}
           </td>
           <td class="w-[150px] h-[50px] p-[10px] table-border-r">
-            {{ position.returnPercent }}
+            {{ formatPercent(position.returnPercent) }}
           </td>
           <td :class="['w-[150px] h-[50px] p-[10px] table-border-r']">
-            {{ position.portfolioWeight }}
+            {{ formatPercent(position.portfolioWeight) }}
           </td>
         </tr>
         <tr v-if="!positions || positions.length === 0">
@@ -54,6 +54,8 @@
   </div>
 </template>
 <script setup>
+import { formatCurrency, formatPercent } from '@/utils/calculations.js'
+
 defineProps({
   positions: {
     type: Array,

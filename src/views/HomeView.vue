@@ -27,20 +27,20 @@ async function processPortfolioData () {
     const positions = await response.json()
     const openPositions = positions.filter(p => p.exitDate === null && p.currentPrice && p.shares)
 
-    // First, calculate the total value (needed for the weighting calculation)
+    // Calculate total portfolio value (for weights)
     const totalPortfolioValue = openPositions.reduce((sum, position) => {
       const positionValue = position.shares * position.currentPrice
       return sum + positionValue
     }, 0)
 
-    // Calculate return percentage.The data is already combined, so only the 'returnPercent' field is needed.
+    // Calculate return percentage. The data is already combined, so only the 'returnPercent' field is needed.
     const displayData = positions.map(position => {
       
       const returnPercent = (position.exitDate === null)
         ? calculateReturnPercent(position.currentPrice, position.entryPrice) // If the position is OPEN, use currentPrice.        
         : calculateReturnPercent(position.exitPrice, position.entryPrice) // If the position is CLOSED, use exitPrice.
 
-        // Calculate position weighting
+        // Calculate weights
         let portfolioWeight = null
         if (position.exitDate === null && position.currentPrice && position.shares) {
           const positionValue = position.shares * position.currentPrice
