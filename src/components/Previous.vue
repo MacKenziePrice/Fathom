@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-4xl font-bold text-center">PREVIOUS POSITIONS</h1>
+    <h1 class="text-4xl font-bold text-center">Previous Positions</h1>
     <table class="table-fixed text-[18px] text-left w-full">
       <thead class="bg-purple-500">
         <tr class="border-t-4 table-border-b" >
@@ -10,7 +10,7 @@
           <th scope="col" class="w-[150px] h-[50px] p-[10px] table-border-r">Entry Price</th>
           <th scope="col" class="w-[150px] h-[50px] p-[10px] table-border-r">Exit Date</th>
           <th scope="col" class="w-[150px] h-[50px] p-[10px] table-border-r">Exit Price</th>
-          <th scope="col" class="w-[150px] h-[50px] p-[10px] table-border-r">Return</th>
+          <th scope="col" class="w-[150px] h-[50px] p-[10px] table-border-r">Change</th>
         </tr>
       </thead>
       <tbody>
@@ -29,19 +29,19 @@
             {{ position.longShort }}
           </td>
           <td class="w-[150px] h-[50px] p-[10px] table-border-r">
-            {{ formatDate(position.entryDate) }}
+            {{ position.entryDate }}
           </td>
           <td class="w-[150px] h-[50px] p-[10px] table-border-r">
-            {{ formatCurrency(position.entryPrice) }}
+            {{ position.entryPrice }}
           </td>
           <td class="w-[150px] h-[50px] p-[10px] table-border-r">
-            {{ position.exitDate ? formatDate(position.exitDate) : 'N/A' }}
+            {{ position.exitDate }}
           </td>
           <td class="w-[150px] h-[50px] p-[10px] table-border-r">
-            {{ position.exitPrice ? formatCurrency(position.exitPrice) : 'N/A' }}
+            {{ position.exitPrice }}
           </td>
           <td :class="['w-[150px] h-[50px] p-[10px] table-border-r', getReturnColor(position.return)]">
-             {{ formatReturn(position.return) }}
+             {{ position.returnPercent }}
           </td>
         </tr>
         <tr v-if="!positions || positions.length === 0">
@@ -55,13 +55,12 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps } from 'vue'
 
-const props = defineProps({
+defineProps({
   positions: {
     type: Array,
-    required: true,
-    default: () => [] // Default to empty array if no positions are passed
+    required: true
   }
 })
 

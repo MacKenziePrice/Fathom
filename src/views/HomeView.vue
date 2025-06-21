@@ -1,38 +1,71 @@
 <template>
   <div>
-    <Positions :positions="portfolioData" class="mx-auto w-[1280px]"/>
+    <Current :positions="openPositions" class="mx-auto w-[1280px]"/>
+    <Previous :positions="closedPositions" class="mx-auto w-[1280px]"/>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import Positions from '@/components/Positions.vue'
+import { calculatePositionWeight, calculateReturnPercent } from '@/utils/calculations.js'
+import { ref, onMounted, computed } from 'vue'
+import Current from '@/components/Current.vue'
+import Previous from '@/components/Previous.vue'
 
-// This reactive ref will hold the array of position objects
-const portfolioData = ref([])
+const portfolioData = ref([]) // This reactive ref will hold the array of position objects
+const openPositions = computed(() => portfolioData.value.filter(position => position.exitDate === null))
+const closedPositions = computed(() => portfolioData.value.filter(position => position.exitDate !== null))
 
-// This function would fetch data from your NodeJS backend
-async function fetchPortfolioData() {
-  console.log("Fetching portfolio data...")
-  // Replace with your actual API call
-  // Simulating a fetch with example data after a short delay
-  await new Promise(resolve => setTimeout(resolve, 500)) // Simulate network delay
-  portfolioData.value = [
-    { id: 1, ticker: 'AAPL', longShort: 'Long', entryDate: '2024-01-15', entryPrice: 170.50, exitDate: null, exitPrice: null, return: 0.15 },
-    { id: 2, ticker: 'MSFT', longShort: 'Long', entryDate: '2023-11-01', entryPrice: 300.00, exitDate: '2024-03-20', exitPrice: 410.25, return: 0.3675 },
-    { id: 3, ticker: 'GOOG', longShort: 'Long', entryDate: '2024-02-10', entryPrice: 140.00, exitDate: null, exitPrice: null, return: 0.08 },
-    { id: 4, ticker: 'TSLA', longShort: 'Short', entryDate: '2024-02-01', entryPrice: 220.00, exitDate: '2024-04-01', exitPrice: 180.00, return: 0.1818 }
-  ]
-   console.log("Portfolio data loaded:", portfolioData.value)
+async function processPortfolioData () {
+  console.log("Fetching unified portfolio data...")
+  try {
+    const response = await fetch('/db/positions.json') // Fetch the single, complete positions file
+
+    if (!response.ok) {
+      throw new Error(`Could not fetch positions.json: ${response.status}`)
+    }
+
+    const positions = await response.json()
+    const openPositions = positions.filter(p => p.exitDate === null && p.currentPrice && p.shares)
+
+    // First, calculate the total value (needed for the weighting calculation)
+    const totalPortfolioValue = openPositions.reduce((sum, position) => {
+      const positionValue = position.shares * position.currentPrice
+      return sum + positionValue
+    }, 0)
+
+    // Calculate return percentage.The data is already combined, so only the 'returnPercent' field is needed.
+    const displayData = positions.map(position => {
+      
+      const returnPercent = (position.exitDate === null)
+        ? calculateReturnPercent(position.currentPrice, position.entryPrice) // If the position is OPEN, use currentPrice.        
+        : calculateReturnPercent(position.exitPrice, position.entryPrice) // If the position is CLOSED, use exitPrice.
+
+        // Calculate position weighting
+        let portfolioWeight = null
+        if (position.exitDate === null && position.currentPrice && position.shares) {
+          const positionValue = position.shares * position.currentPrice
+          portfolioWeight = calculatePositionWeight(positionValue, totalPortfolioValue)
+        }
+
+      return {
+        ...position,
+        portfolioWeight,
+        returnPercent
+      }
+    })
+    
+    portfolioData.value = displayData // Update the component's state
+    console.log("Final display data:", portfolioData.value)
+
+  } catch (error) {
+    console.error("Error fetching or processing portfolio data:", error)
+    portfolioData.value = []
+  }
 }
 
 onMounted(() => {
-  fetchPortfolioData()
+  processPortfolioData ()
 })
-
-// You would also add logic here for real-time updates,
-// which would modify the `portfolioData.value` array.
-
 </script>
 
 <style scoped>

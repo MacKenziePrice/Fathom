@@ -1,0 +1,47 @@
+[
+  {
+    "date": "2025-06-18",
+    "tickers": [
+      {
+        "symbol": "PHYS",
+        "name": "Sprott",
+        "close": "25.85",
+        "date": "2025-06-18"
+      }
+    ]
+  },
+  {
+    "date": "2025-06-18",
+    "tickers": [
+      {
+        "symbol": "PHYS",
+        "name": "Sprott",
+        "close": "25.85",
+        "date": "2025-06-18"
+      },
+      {
+        "symbol": "BABA",
+        "name": "Alibaba",
+        "close": "113.49",
+        "date": "2025-06-18"
+      }
+    ]
+  },
+  {
+    "date": "2025-06-19",
+    "tickers": [
+      {
+        "symbol": "PHYS",
+        "name": "Sprott",
+        "close": "25.85",
+        "date": "2025-06-18"
+      },
+      {
+        "symbol": "BABA",
+        "name": "Alibaba",
+        "close": "113.49",
+        "date": "2025-06-18"
+      }
+    ]
+  }
+]

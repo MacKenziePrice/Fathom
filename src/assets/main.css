@@ -7,6 +7,7 @@
   --color-positions-dark: rgb(52, 62, 72);
   --color-positions-darker: rgb(58, 68, 78);
   --font-sans: 'Inter', 'Roboto', 'Satoshi', ui-sans-serif, system-ui, sans-serif; /* Override Tailwind's default font-sans utility to use Inter, then Roboto as fallback */
+  --font-satoshi: 'Satoshi', 'sans-serif';
 }
 
 .table-border-b {
@@ -15,4 +16,8 @@
 
 .table-border-r {
   @apply border-r-2 border-border-table
+}
+
+:root {
+  --font-satoshi: 'Satoshi', 'sans-serif';
 }

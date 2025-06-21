@@ -1,0 +1,37 @@
+[
+  {
+    "currentPrice": 25.85,
+    "entryDate": "2025-04-26",
+    "entryPrice": 20,
+    "exitDate": null,
+    "exitPrice": null,
+    "lastUpdated": "2025-06-20T02:44:00.261Z",
+    "longShort": "long",
+    "name": "Sprott",
+    "shares": 1000,
+    "ticker": "PHYS"
+  },
+  {
+    "currentPrice": 113.49,
+    "entryDate": "2021-06-10",
+    "entryPrice": 120,
+    "exitDate": null,
+    "exitPrice": null,
+    "lastUpdated": "2025-06-20T02:44:12.437Z",
+    "longShort": "long",
+    "name": "Alibaba",
+    "shares": 100,
+    "ticker": "BABA"
+  },
+  {
+    "ticker": "MSFT",
+    "entryDate": "2023-11-01",
+    "entryPrice": 300,
+    "exitDate": "2024-03-20",
+    "exitPrice": 410.25,
+    "longShort": "long",
+    "name": "Microsoft",
+    "currentPrice": null,
+    "lastUpdated": null
+  }
+]
