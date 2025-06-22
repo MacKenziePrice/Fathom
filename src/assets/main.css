@@ -1,5 +1,5 @@
-@import 'tailwindcss';
 @import './base.css';
+@import 'tailwindcss';
 
 @theme {
   --color-border-table: rgb(30, 30, 35);
@@ -8,6 +8,10 @@
   --color-positions-darker: rgb(58, 68, 78);
   --font-sans: 'Inter', 'Roboto', 'Satoshi', ui-sans-serif, system-ui, sans-serif; /* Override Tailwind's default font-sans utility to use Inter, then Roboto as fallback */
   --font-satoshi: 'Satoshi', 'sans-serif';
+}
+
+.section-title {
+  @apply mb-3 text-2xl text-center
 }
 
 .table-border-b {

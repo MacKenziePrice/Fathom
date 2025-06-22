@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-4xl font-bold text-center">Previous Positions</h1>
+    <h1 class="section-title">Previous Positions</h1>
     <table class="table-fixed text-[18px] text-left w-full">
       <thead class="bg-purple-500">
         <tr class="border-t-4 table-border-b" >

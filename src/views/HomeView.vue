@@ -1,13 +1,15 @@
 <template>
   <div>
-    <Current :positions="openPositions" class="mx-auto w-[1280px]"/>
-    <Previous :positions="closedPositions" class="mx-auto w-[1280px]"/>
+    <Current :positions="openPositions" class="pb-10 w-[1280px]"/>
+    <Chart class="pb-10 w-[1280px]"/>
+    <Previous :positions="closedPositions" class="w-[1280px]"/>
   </div>
 </template>
 
 <script setup>
 import { calculatePositionWeight, calculateReturnPercent } from '@/utils/calculations.js'
 import { ref, onMounted, computed } from 'vue'
+import Chart from '@/components/Chart.vue'
 import Current from '@/components/Current.vue'
 import Previous from '@/components/Previous.vue'
 
