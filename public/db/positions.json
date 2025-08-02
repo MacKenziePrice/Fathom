@@ -6,7 +6,7 @@
     "entryPrice": 20,
     "exitDate": null,
     "exitPrice": null,
-    "lastUpdated": "2025-06-21T02:44:00.335Z",
+    "lastUpdated": "2025-06-23T02:44:00.585Z",
     "longShort": "Long",
     "name": "Sprott",
     "shares": 1000,
@@ -14,12 +14,12 @@
   },
   {
     "currency": "JPY",
-    "currentPrice": 113.01,
+    "currentPrice": 11.01,
     "entryDate": "June 10, 2024",
     "entryPrice": 120,
     "exitDate": null,
     "exitPrice": null,
-    "lastUpdated": "2025-06-21T02:44:12.458Z",
+    "lastUpdated": "2025-06-23T02:44:12.696Z",
     "longShort": "Long",
     "name": "Alibaba",
     "shares": 100,
@@ -27,8 +27,21 @@
   },
   {
     "currency": "USD",
+    "currentPrice": 413.01,
+    "entryDate": "June 1, 2020",
+    "entryPrice": 200,
+    "exitDate": null,
+    "exitPrice": null,
+    "lastUpdated": "2025-06-23T02:44:12.696Z",
+    "longShort": "Long",
+    "name": "Tesla",
+    "shares": 200,
+    "ticker": "TSLA"
+  },
+  {
+    "currency": "USD",
     "currentPrice": null,
-    "entryDate": "November 1, 2023",
+    "entryDate": "November 2, 2023",
     "entryPrice": 300,
     "exitDate": "March 3, 2024",
     "exitPrice": 410.25,
@@ -37,5 +50,31 @@
     "name": "Microsoft",
     "share": 1,
     "ticker": "MSFT"
+  },
+  {
+    "currency": "USD",
+    "currentPrice": null,
+    "entryDate": "July 8, 2023",
+    "entryPrice": 100,
+    "exitDate": "March 11, 2024",
+    "exitPrice": 200.25,
+    "lastUpdated": null,
+    "longShort": "Short",
+    "name": "JD",
+    "share": 1,
+    "ticker": "JD"
+  },
+    {
+    "currency": "USD",
+    "currentPrice": null,
+    "entryDate": "July 1, 2020",
+    "entryPrice": 20,
+    "exitDate": "October 11, 2024",
+    "exitPrice": 100.25,
+    "lastUpdated": null,
+    "longShort": "Short",
+    "name": "Alphabet",
+    "share": 10,
+    "ticker": "GOOG"
   }
 ]

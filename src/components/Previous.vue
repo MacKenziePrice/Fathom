@@ -1,48 +1,51 @@
 <template>
   <div>
     <h1 class="section-title">Previous Positions</h1>
+    <div class="flex justify-center pb-1">
+      <div class="border-2 border-white text-[14px] inline-flex overflow-hidden rounded-xs">
+        <button @click="view = 'equities'" class="cursor-pointer px-4 py-2" :class="view === 'equities' ? 'bg-purple-500' : 'bg-positions-darker'">Equities</button>
+        <button @click="view = 'options'" class="cursor-pointer px-4 py-2" :class="view === 'options' ? 'bg-purple-500' : 'bg-positions-darker'">Options</button>
+      </div>
+    </div>
     <table class="table-fixed text-[18px] text-left w-full">
-      <thead class="bg-purple-500">
-        <tr class="border-t-4 table-border-b" >
-          <th scope="col" class="w-[150px] h-[50px] p-[10px] border-l-4 table-border-r">Ticker</th>
-          <th scope="col" class="w-[150px] h-[50px] p-[10px] table-border-r">Long/Short</th>
-          <th scope="col" class="w-[150px] h-[50px] p-[10px] table-border-r">Entry Date</th>
-          <th scope="col" class="w-[150px] h-[50px] p-[10px] table-border-r">Entry Price</th>
-          <th scope="col" class="w-[150px] h-[50px] p-[10px] table-border-r">Exit Date</th>
-          <th scope="col" class="w-[150px] h-[50px] p-[10px] table-border-r">Exit Price</th>
-          <th scope="col" class="w-[150px] h-[50px] p-[10px] table-border-r">Change</th>
+      <thead class="bg-purple-500 cursor-pointer">
+        <tr>
+          <th @click="sortBy('ticker')" scope="col" class="w-[150px] h-[50px] p-[10px] table-border-b table-border-r">
+            Ticker <span v-if="sortKey === 'ticker'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+          </th>
+          <th @click="sortBy('longShort')" scope="col" class="w-[150px] h-[50px] p-[10px] table-border-b table-border-l-r">
+            Long/Short <span v-if="sortKey === 'longShort'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+          </th>
+          <th @click="sortBy('entryDate')" scope="col" class="w-[150px] h-[50px] p-[10px] table-border-b table-border-l-r">
+            Entry Date <span v-if="sortKey === 'entryDate'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+          </th>
+          <th @click="sortBy('entryPrice')" scope="col" class="w-[150px] h-[50px] p-[10px] table-border-b table-border-l">
+            Entry Price <span v-if="sortKey === 'entryPrice'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+          </th>
+          <th @click="sortBy('exitDate')" scope="col" class="w-[150px] h-[50px] p-[10px] table-border-b table-border-l">
+            Exit Date <span v-if="sortKey === 'exitDate'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+          </th>
+          <th @click="sortBy('exitPrice')" scope="col" class="w-[150px] h-[50px] p-[10px] table-border-b table-border-l">
+            Exit Price <span v-if="sortKey === 'exitPrice'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+          </th>
+          <th @click="sortBy('returnPercent')" scope="col" class="w-[150px] h-[50px] p-[10px] table-border-b table-border-l">
+            Return <span v-if="sortKey === 'returnPercent'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+          </th>
         </tr>
       </thead>
       <tbody>
         <tr
-          v-for="(position, index) in positions"
+          v-for="(position, index) in sortedData"
             :key="position.id || index"
-            :class="[
-              index % 2 === 0 ? 'bg-positions-dark' : 'bg-positions-darker',
-              'border-l-4 table-border-b'
-            ]"
+            :class="[ index % 2 === 0 ? 'bg-positions-dark' : 'bg-positions-darker' ]"
         >
-          <td class="w-[150px] h-[50px] p-[10px] table-border-r">
-            {{ position.ticker }}
-          </td>
-          <td class="w-[150px] h-[50px] p-[10px] table-border-r">
-            {{ position.longShort }}
-          </td>
-          <td class="w-[150px] h-[50px] p-[10px] table-border-r">
-            {{ position.entryDate }}
-          </td>
-          <td class="w-[150px] h-[50px] p-[10px] table-border-r">
-            {{ formatCurrency(position.entryPrice, position.currency) }}
-          </td>
-          <td class="w-[150px] h-[50px] p-[10px] table-border-r">
-            {{ position.exitDate }}
-          </td>
-          <td class="w-[150px] h-[50px] p-[10px] table-border-r">
-            {{ formatCurrency(position.exitPrice, position.currency) }}
-          </td>
-          <td :class="['w-[150px] h-[50px] p-[10px] table-border-r', getReturnColor(position.return)]">
-            {{ formatPercent(position.returnPercent) }}
-          </td>
+          <td :class="[ 'w-[150px] h-[50px] p-[10px] table-border-r', { 'table-border-b-t': index !== positions.length - 1 }]">{{ position.ticker }}</td>
+          <td :class="[ 'w-[150px] h-[50px] p-[10px] table-border-r', { 'table-border-b-t': index !== positions.length - 1 }]">{{ position.longShort }}</td>
+          <td :class="[ 'w-[150px] h-[50px] p-[10px] table-border-r', { 'table-border-b-t': index !== positions.length - 1 }]">{{ position.entryDate }}</td>
+          <td :class="[ 'w-[150px] h-[50px] p-[10px] table-border-r', { 'table-border-b-t': index !== positions.length - 1 }]">{{ formatCurrency(position.entryPrice, position.currency) }}</td>
+          <td :class="[ 'w-[150px] h-[50px] p-[10px] table-border-r', { 'table-border-b-t': index !== positions.length - 1 }]">{{ position.exitDate }}</td>
+          <td :class="[ 'w-[150px] h-[50px] p-[10px] table-border-r', { 'table-border-b-t': index !== positions.length - 1 }]">{{ formatCurrency(position.exitPrice, position.currency) }}</td>
+          <td :class="[ 'w-[150px] h-[50px] p-[10px] table-border-l', { 'table-border-b-t': index !== positions.length - 1 }]">{{ formatPercent(position.returnPercent) }}</td>
         </tr>
         <tr v-if="!positions || positions.length === 0">
            <td :colspan="7" class="py-4 text-center text-gray-500">
@@ -55,14 +58,31 @@
 </template>
 
 <script setup>
+import { computed, ref, toRefs } from 'vue'
 import { formatCurrency, formatPercent } from '@/utils/calculations.js'
+import { useSort } from '@/composables/useSort.js'
+import { useToggleView } from '@/composables/useToggleView'
 
-defineProps({
+const props = defineProps({
   positions: {
     type: Array,
     required: true
   }
 })
+
+const { positions } = toRefs(props)
+const { sortBy, sortDirection, sortKey, sortedData } = useSort(positions)
+
+// 1. Toggle view state + filtered data
+const { view, equities, options } = useToggleView({
+  getEquities: () => positions.value.filter(p => p.type === 'equity'),
+  getOptions: () => positions.value.filter(p => p.type === 'option')
+})
+
+// 2. Apply sorting to the selected view
+const currentData = computed(() =>
+  view.value === 'equities' ? equities.value : options.value
+)
 
 // Example: Format date (you might use a library like date-fns or moment.js)
 function formatDate(dateString) {
@@ -82,6 +102,3 @@ function getReturnColor(returnValue) {
     return returnValue >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400';
 }
 </script>
-
-<style scoped>
-</style>

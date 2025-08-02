@@ -1,21 +1,93 @@
 [
-  { "date": "2024-01-02", "portfolioValue": 45000.00, "benchmarkValue": 480.00 },
-  { "date": "2024-01-31", "portfolioValue": 45500.00, "benchmarkValue": 482.50 },
-  { "date": "2024-02-28", "portfolioValue": 46500.00, "benchmarkValue": 488.00 },
-  { "date": "2024-03-29", "portfolioValue": 47800.00, "benchmarkValue": 495.00 },
-  { "date": "2024-04-30", "portfolioValue": 47500.00, "benchmarkValue": 492.00 },
-  { "date": "2024-05-31", "portfolioValue": 48800.00, "benchmarkValue": 505.00 },
-  { "date": "2024-06-28", "portfolioValue": 49500.00, "benchmarkValue": 510.00 },
-  { "date": "2024-07-31", "portfolioValue": 50500.00, "benchmarkValue": 518.00 },
-  { "date": "2024-08-30", "portfolioValue": 51000.00, "benchmarkValue": 520.00 },
-  { "date": "2024-09-30", "portfolioValue": 50800.00, "benchmarkValue": 515.00 },
-  { "date": "2024-10-31", "portfolioValue": 52000.00, "benchmarkValue": 525.00 },
-  { "date": "2024-11-29", "portfolioValue": 53500.00, "benchmarkValue": 538.00 },
-  { "date": "2024-12-31", "portfolioValue": 54000.00, "benchmarkValue": 542.00 },
-  { "date": "2025-01-31", "portfolioValue": 54500.00, "benchmarkValue": 545.00 },
-  { "date": "2025-02-28", "portfolioValue": 55500.00, "benchmarkValue": 550.00 },
-  { "date": "2025-03-31", "portfolioValue": 56000.00, "benchmarkValue": 558.00 },
-  { "date": "2025-04-30", "portfolioValue": 55800.00, "benchmarkValue": 555.00 },
-  { "date": "2025-05-30", "portfolioValue": 56500.00, "benchmarkValue": 562.00 },
-  { "date": "2025-06-20", "portfolioValue": 57000.00, "benchmarkValue": 568.00 }
+  {
+    "date": "2025-03-01",
+    "portfolioValue": 100000.00,
+    "benchmarkValue": 100000.00
+  },
+  {
+    "date": "2025-03-02",
+    "portfolioValue": 100345.11,
+    "benchmarkValue": 100210.43
+  },
+  {
+    "date": "2025-03-03",
+    "portfolioValue": 100189.45,
+    "benchmarkValue": 100150.88
+  },
+  {
+    "date": "2025-03-04",
+    "portfolioValue": 100781.22,
+    "benchmarkValue": 100612.54
+  },
+  {
+    "date": "2025-03-05",
+    "portfolioValue": 101234.56,
+    "benchmarkValue": 100987.65
+  },
+  {
+    "date": "2025-03-06",
+    "portfolioValue": 101001.88,
+    "benchmarkValue": 100850.12
+  },
+  {
+    "date": "2025-03-07",
+    "portfolioValue": 101555.33,
+    "benchmarkValue": 101301.99
+  },
+    {
+    "date": "2025-06-14",
+    "portfolioValue": 101234.56,
+    "benchmarkValue": 100987.65
+  },
+  {
+    "date": "2025-06-15",
+    "portfolioValue": 101001.88,
+    "benchmarkValue": 100850.12
+  },
+  {
+    "date": "2025-06-16",
+    "portfolioValue": 101555.33,
+    "benchmarkValue": 101301.99
+  },
+  {
+    "date": "2025-06-17",
+    "portfolioValue": 110254.87,
+    "benchmarkValue": 108541.23
+  },
+  {
+  "date": "2025-06-18",
+  "portfolioValue": 110498.12,
+  "benchmarkValue": 108785.45
+  },
+  
+  {
+    "date": "2025-06-19",
+    "portfolioValue": 110498.12,
+    "benchmarkValue": 108785.45
+  },   
+  {
+    "date": "2025-06-20",
+    "portfolioValue": 110375.99,
+    "benchmarkValue": 108611.88
+  },
+  {
+    "date": "2025-06-21",
+    "portfolioValue": 110821.45,
+    "benchmarkValue": 108999.01
+  },
+  {
+    "date": "2025-06-22",
+    "portfolioValue": 111111.11,
+    "benchmarkValue": 109234.56
+  },
+  {
+    "date": "2025-06-23",
+    "portfolioValue": 111305.88,
+    "benchmarkValue": 109401.76
+  },
+  {
+    "date": "2025-06-24",
+    "portfolioValue": 111521.65,
+    "benchmarkValue": 109650.32
+  }
 ]

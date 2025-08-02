@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="section-title">Performance</h1>
-    <div class="bg-positions-dark h-[500px] p-1">
+    <div class="bg-positions-dark h-[500px] p-1 rounded-lg">
       <Line :data="chartData" :options="chartOptions" />
     </div>
   </div>
@@ -40,7 +40,8 @@ const chartOptions = ref({
   plugins: {
     legend: {
       labels: {
-        color: '#FFFFFF'
+        color: '#FFFFFF',
+        usePointStyle: true,
       },
       position: 'top',
     },
@@ -51,17 +52,27 @@ const chartOptions = ref({
     },
     tooltip: {
       callbacks: {
-        label: function(context) {
-          let label = context.dataset.label || ''
-          if (label) {
-            label += ': '
-          }
+         label: function(context) {
+          const datasetLabel = context.dataset.label || ''
+          let valueLabel = ''
+
           if (context.parsed.y !== null) {
-            label += formatPercent(context.parsed.y)
+            valueLabel = formatPercent(context.parsed.y)
           }
-          return label
+
+          return `${datasetLabel}: ${valueLabel}`
+        },
+        title: function(tooltipItems) {
+          const date = new Date(tooltipItems[0].label)
+
+          return date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })
         }
-      }
+      },
+      displayColors: false
     }
   },
   scales: {
@@ -70,7 +81,26 @@ const chartOptions = ref({
         display: false
       },
       ticks: {
-        color: '#FFFFFF'
+        color: '#FFFFFF',
+        callback: function(value, index, ticks) {
+          const label = this.chart.data.labels[index]
+          const labels = this.chart.data.labels
+          const currentDate = new Date(labels[index])
+
+          // If there's no next label, it's the last point, so show it
+          if (!labels[index + 1]) {
+            return currentDate.toLocaleDateString('en-US', { month: 'short', year: '2-digit' })
+          }
+
+          const nextDate = new Date(labels[index + 1])
+
+          // If the next data point is in a different month, show the current label
+          if (currentDate.getMonth() !== nextDate.getMonth()) {
+            return currentDate.toLocaleDateString('en-US', { month: 'short', year: '2-digit' })
+          } else {
+            return null
+          }
+        }
       }
     },
     y: {
@@ -79,7 +109,7 @@ const chartOptions = ref({
         display: false
       },
       ticks: {
-        callback: (value) => formatPercent(value),
+        callback: (value) => `${Math.round(value)}%`, // Rounds to a whole number
         color: '#FFFFFF'
       }
     }
@@ -92,54 +122,30 @@ function processDataForChart(history) {
 
   const firstPortfolioValue = history[0].portfolioValue
   const firstBenchmarkValue = history[0].benchmarkValue
-
   const portfolioPerfData = history.map(item => ((item.portfolioValue - firstPortfolioValue) / firstPortfolioValue) * 100)
   const benchmarkPerfData = history.map(item => ((item.benchmarkValue - firstBenchmarkValue) / firstBenchmarkValue) * 100)
-  
-  // --- Label Generation (New Logic) ---
-  const labels = []
-  const seenQuarters = new Set()
-  
-  // Create a map of the last date for each quarter
-  const lastDateOfQuarter = new Map()
-  history.forEach(entry => {
-    const date = new Date(entry.date)
-    const year = date.getFullYear()
-    const quarter = Math.floor(date.getMonth() / 3) + 1
-    const quarterId = `${year}-Q${quarter}`
-    lastDateOfQuarter.set(quarterId, entry.date) // Keep overwriting until the last date for that quarter is stored
-  })
-
-  // Now create the labels array: either a quarter label or an empty string
-  history.forEach(entry => {
-    const date = new Date(entry.date)
-    const year = date.getFullYear()
-    const quarter = Math.floor(date.getMonth() / 3) + 1
-    const quarterId = `${year}-Q${quarter}`
-    const quarterLabel = `Q${quarter} ${String(year).slice(-2)}`
-    
-    // Is this entry the last one for its quarter? If so, use the label.
-    if (entry.date === lastDateOfQuarter.get(quarterId)) {
-      labels.push(quarterLabel)
-    } else {
-      labels.push('') // Otherwise, use an empty string
-    }
-  })
+  const dailyLabels = history.map(item => item.date)
   
   chartData.value = {
-    labels: labels,
+    labels: dailyLabels,
     datasets: [
       {
         label: 'Fathom',
-        backgroundColor: 'rgba(255, 255, 255, 1)',
         borderColor: '#432dd7',
-        data: portfolioPerfData
+        data: portfolioPerfData,
+        pointBackgroundColor: '#432dd7',
+        pointHitRadius: 15,  
+        pointHoverRadius: 0,
+        pointRadius: 0
       },
       {
         label: 'SPY',
-        backgroundColor: 'rgba(245, 166, 35, 0.2)',
         borderColor: '#FFFFFF',
-        data: benchmarkPerfData
+        data: benchmarkPerfData,
+        pointBackgroundColor: '#FFFFFF',
+        pointHitRadius: 15,
+        pointHoverRadius: 0,
+        pointRadius: 0
       }
     ]
   }

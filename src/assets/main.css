@@ -10,17 +10,13 @@
   --font-satoshi: 'Satoshi', 'sans-serif';
 }
 
-.section-title {
-  @apply mb-3 text-2xl text-center
-}
-
-.table-border-b {
-  @apply border-b-2 border-border-table
-}
-
-.table-border-r {
-  @apply border-r-2 border-border-table
-}
+.section-title { @apply mb-3 text-2xl text-center }
+.table-border-b { @apply border-b-2 border-border-table }
+.table-border-b-t { @apply border-b-2 border-t-2 border-border-table }
+.table-border-l { @apply border-l-2 border-border-table }
+.table-border-l-r { @apply border-l-2 border-r-2 border-border-table }
+.table-border-r { @apply border-r-2 border-border-table }
+.table-border-t { @apply border-t-2 border-border-table }
 
 :root {
   --font-satoshi: 'Satoshi', 'sans-serif';

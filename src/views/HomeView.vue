@@ -1,16 +1,20 @@
 <template>
-  <div>
-    <Current :positions="openPositions" class="pb-10 w-[1280px]"/>
-    <Chart class="pb-10 w-[1280px]"/>
-    <Previous :positions="closedPositions" class="w-[1280px]"/>
+  <div class="w-[1280px]">
+    <Heading class="pb-10 pt-5"/>
+    <About class="pb-15"/>
+    <Current :positions="openPositions" class="pb-15"/>
+    <Chart class="pb-15"/>
+    <Previous :positions="closedPositions" class="pb-15"/>
   </div>
 </template>
 
 <script setup>
 import { calculatePositionWeight, calculateReturnPercent } from '@/utils/calculations.js'
-import { ref, onMounted, computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
+import About from '@/components/About.vue'
 import Chart from '@/components/Chart.vue'
 import Current from '@/components/Current.vue'
+import Heading from '@/components/Heading.vue'
 import Previous from '@/components/Previous.vue'
 
 const portfolioData = ref([]) // This reactive ref will hold the array of position objects
