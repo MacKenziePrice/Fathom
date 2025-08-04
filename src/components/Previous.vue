@@ -1,8 +1,8 @@
 <template>
   <div>
     <h1 class="section-title">Previous Positions</h1>
-    <div class="flex justify-center pb-1">
-      <div class="border-2 border-white text-[14px] inline-flex overflow-hidden rounded-xs">
+    <div class="pb-[2px]">
+      <div class="border-white inline-flex overflow-hidden rounded-xs text-[12px]">
         <button @click="view = 'equities'" class="cursor-pointer px-4 py-2" :class="view === 'equities' ? 'bg-purple-500' : 'bg-positions-darker'">Equities</button>
         <button @click="view = 'options'" class="cursor-pointer px-4 py-2" :class="view === 'options' ? 'bg-purple-500' : 'bg-positions-darker'">Options</button>
       </div>
@@ -61,7 +61,7 @@
 import { computed, ref, toRefs } from 'vue'
 import { formatCurrency, formatPercent } from '@/utils/calculations.js'
 import { useSort } from '@/composables/useSort.js'
-import { useToggleView } from '@/composables/useToggleView'
+import { useToggleOptions } from '@/composables/useToggleOptions'
 
 const props = defineProps({
   positions: {
@@ -73,13 +73,11 @@ const props = defineProps({
 const { positions } = toRefs(props)
 const { sortBy, sortDirection, sortKey, sortedData } = useSort(positions)
 
-// 1. Toggle view state + filtered data
-const { view, equities, options } = useToggleView({
+const { equities, options, view } = useToggleOptions({
   getEquities: () => positions.value.filter(p => p.type === 'equity'),
   getOptions: () => positions.value.filter(p => p.type === 'option')
 })
 
-// 2. Apply sorting to the selected view
 const currentData = computed(() =>
   view.value === 'equities' ? equities.value : options.value
 )

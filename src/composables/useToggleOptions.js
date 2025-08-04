@@ -1,10 +1,9 @@
-// composables/useToggleView.js
-import { ref, watch, onMounted } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
-export function useToggleView({ getEquities, getOptions }) {
-  const view = ref('equities')
+export function useToggleOptions({ getEquities, getOptions }) {
   const equities = ref([])
   const options = ref([])
+  const view = ref('equities')
 
   watch(view, () => {
     if (view.value === 'equities') {
@@ -19,8 +18,8 @@ export function useToggleView({ getEquities, getOptions }) {
   })
 
   return {
-    view,
     equities,
-    options
+    options,
+    view,
   }
 }

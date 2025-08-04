@@ -2,6 +2,7 @@
   {
     "currency": "USD",
     "currentPrice": 25.84,
+    "description": "Initial position established due to strong performance in the services sector and anticipation of new product cycle.",
     "entryDate": "April 26, 2025",
     "entryPrice": 20,
     "exitDate": null,
@@ -15,6 +16,7 @@
   {
     "currency": "JPY",
     "currentPrice": 11.01,
+    "description": "Initial position established due to strong performance in the services sector and anticipation of new product cycle.",
     "entryDate": "June 10, 2024",
     "entryPrice": 120,
     "exitDate": null,
@@ -28,6 +30,7 @@
   {
     "currency": "USD",
     "currentPrice": 413.01,
+    "description": "Initial position established due to strong performance in the services sector and anticipation of new product cycle.",
     "entryDate": "June 1, 2020",
     "entryPrice": 200,
     "exitDate": null,
