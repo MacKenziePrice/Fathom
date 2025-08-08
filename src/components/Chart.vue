@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="section-title">Performance</h1>
-    <div class="bg-positions-darker h-[600px] rounded-xs">
+    <div class="bg-positions-darker h-[400px] rounded-xs">
       <Line :data="chartData" :options="chartOptions" />
     </div>
   </div>

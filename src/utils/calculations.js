@@ -1,6 +1,5 @@
 export function calculateReturnPercent(currentPrice, entryPrice) {
-  // Guard against division by zero or invalid data
-  if (!entryPrice || entryPrice === 0 || !currentPrice) {
+  if (!currentPrice || !entryPrice || entryPrice === 0) { // Guard against invalid data
     return 0
   }
 
@@ -53,6 +52,7 @@ export function formatPercent(value) {
     return 'N/A'
   }
 
-  // Convert number to string with 2 decimal places and add the '%' sign
-  return `${value.toFixed(1)}%`
+  return `${value.toFixed(1)}%` // Convert number to string with 2 decimal places and add the '%' sign
 }
+
+export const getReturnColor = (returnPercent) => (returnPercent < 0 ? 'text-rose-40000' : '')

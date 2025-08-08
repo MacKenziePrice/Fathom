@@ -10,47 +10,28 @@
     <table class="table-fixed text-[18px] text-left w-full">
       <thead class="bg-purple-500 cursor-pointer">
         <tr>
-          <th @click="sortBy('ticker')" scope="col" class="w-[150px] h-[50px] p-[10px] table-border-b table-border-r">
-            Ticker <span v-if="sortKey === 'ticker'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-          </th>
-          <th @click="sortBy('longShort')" scope="col" class="w-[150px] h-[50px] p-[10px] table-border-b table-border-l-r">
-            Long/Short <span v-if="sortKey === 'longShort'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-          </th>
-          <th @click="sortBy('entryDate')" scope="col" class="w-[150px] h-[50px] p-[10px] table-border-b table-border-l-r">
-            Entry Date <span v-if="sortKey === 'entryDate'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-          </th>
-          <th @click="sortBy('entryPrice')" scope="col" class="w-[150px] h-[50px] p-[10px] table-border-b table-border-l">
-            Entry Price <span v-if="sortKey === 'entryPrice'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-          </th>
-          <th @click="sortBy('exitDate')" scope="col" class="w-[150px] h-[50px] p-[10px] table-border-b table-border-l">
-            Exit Date <span v-if="sortKey === 'exitDate'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-          </th>
-          <th @click="sortBy('exitPrice')" scope="col" class="w-[150px] h-[50px] p-[10px] table-border-b table-border-l">
-            Exit Price <span v-if="sortKey === 'exitPrice'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-          </th>
-          <th @click="sortBy('returnPercent')" scope="col" class="w-[150px] h-[50px] p-[10px] table-border-b table-border-l">
-            Return <span v-if="sortKey === 'returnPercent'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+          <th v-for="column in columns" :key="column.key" @click="sortBy(column.key)" scope="col" class="w-[150px] h-[50px] p-[10px] border-b-2 border-l-2 border-main-background border-r-2 first:border-l-0 last:border-r-0">
+            {{ column.label }} <span v-if="sortKey === column.key">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr
-          v-for="(position, index) in sortedData"
-            :key="position.id || index"
-            :class="[ index % 2 === 0 ? 'bg-positions-dark' : 'bg-positions-darker' ]"
-        >
-          <td :class="[ 'w-[150px] h-[50px] p-[10px] table-border-r', { 'table-border-b-t': index !== positions.length - 1 }]">{{ position.ticker }}</td>
-          <td :class="[ 'w-[150px] h-[50px] p-[10px] table-border-r', { 'table-border-b-t': index !== positions.length - 1 }]">{{ position.longShort }}</td>
-          <td :class="[ 'w-[150px] h-[50px] p-[10px] table-border-r', { 'table-border-b-t': index !== positions.length - 1 }]">{{ position.entryDate }}</td>
-          <td :class="[ 'w-[150px] h-[50px] p-[10px] table-border-r', { 'table-border-b-t': index !== positions.length - 1 }]">{{ formatCurrency(position.entryPrice, position.currency) }}</td>
-          <td :class="[ 'w-[150px] h-[50px] p-[10px] table-border-r', { 'table-border-b-t': index !== positions.length - 1 }]">{{ position.exitDate }}</td>
-          <td :class="[ 'w-[150px] h-[50px] p-[10px] table-border-r', { 'table-border-b-t': index !== positions.length - 1 }]">{{ formatCurrency(position.exitPrice, position.currency) }}</td>
-          <td :class="[ 'w-[150px] h-[50px] p-[10px] table-border-l', { 'table-border-b-t': index !== positions.length - 1 }]">{{ formatPercent(position.returnPercent) }}</td>
-        </tr>
-        <tr v-if="!positions || positions.length === 0">
-           <td :colspan="7" class="py-4 text-center text-gray-500">
-               No positions to display.
-           </td>
+        <template v-for="(position, index) in sortedData" :key="position.ticker || index">
+          <tr @click="toggleNotes(position.ticker)" class="border-b-2 border-main-background last:border-b-0" :class="[ index % 2 === 0 ? 'bg-positions-dark' : 'bg-positions-darker', 'cursor-pointer' ]">
+            <td v-for="column in columns" :key="column.key" class="w-[150px] h-[50px] p-[10px] border-l-2 border-main-background border-r-2 first:border-l-0 last:border-r-0" :class="column.key === 'returnPercent' ? getReturnColor(position.returnPercent) : ''">
+              {{ column.format ? column.format(position[column.key], position) : position[column.key] }}
+            </td>
+          </tr>
+          <tr v-if="note === position.ticker" :class="[ index % 2 === 0 ? 'bg-positions-dark' : 'bg-positions-darker' ]">
+            <td :colspan="columns.length" class="cursor-pointer p-2 text-[14px]">
+              <p>{{ position.description }}</p>
+            </td>
+          </tr>
+        </template>
+        <tr v-if="!sortedData || sortedData.length === 0">
+          <td :colspan="columns.length" class="py-1 text-center">
+            No closed {{ view }} to display.
+          </td>
         </tr>
       </tbody>
     </table>
@@ -59,44 +40,37 @@
 
 <script setup>
 import { computed, ref, toRefs } from 'vue'
-import { formatCurrency, formatPercent } from '@/utils/calculations.js'
+import { formatCurrency, formatPercent, getReturnColor } from '@/utils/calculations.js'
 import { useSort } from '@/composables/useSort.js'
 import { useToggleOptions } from '@/composables/useToggleOptions'
+import { useTradeTable } from '@/composables/useTradeTable.js'
 
 const props = defineProps({
-  positions: {
-    type: Array,
-    required: true
-  }
+  equities: { type: Array, required: true },
+  options: { type: Array, required: true }
 })
 
-const { positions } = toRefs(props)
-const { sortBy, sortDirection, sortKey, sortedData } = useSort(positions)
+const equityColumns = [
+  { key: 'ticker', label: 'Ticker' },
+  { key: 'longShort', label: 'Long/Short' },
+  { key: 'entryDate', label: 'Entry Date' },
+  { key: 'exitDate', label: 'Exit Date' },
+  { key: 'entryPrice', label: 'Entry Price', format: (val, item) => formatCurrency(val, item.currency) },
+  { key: 'exitPrice', label: 'Exit Price', format: (val, item) => formatCurrency(val, item.currency) },
+  { key: 'returnPercent', label: 'Return', format: formatPercent }
+]
 
-const { equities, options, view } = useToggleOptions({
-  getEquities: () => positions.value.filter(p => p.type === 'equity'),
-  getOptions: () => positions.value.filter(p => p.type === 'option')
-})
+const optionColumns = [
+  { key: 'ticker', label: 'Ticker' },
+  { key: 'type', label: 'Type' },
+  { key: 'strikePrice', label: 'Strike', format: (val, item) => formatCurrency(val, item.currency) },
+  { key: 'expiryDate', label: 'Expiry' },
+  { key: 'exitDate', label: 'Exit Date' },
+  { key: 'exitPrice', label: 'Exit Premium', format: (val, item) => formatCurrency(val, item.currency) },
+  { key: 'returnPercent', label: 'Return', format: formatPercent }
+]
 
-const currentData = computed(() =>
-  view.value === 'equities' ? equities.value : options.value
-)
+const columns = computed(() => view.value === 'equities' ? equityColumns : optionColumns)
 
-// Example: Format date (you might use a library like date-fns or moment.js)
-function formatDate(dateString) {
-  if (!dateString) return ''
-  const options = { year: '2-digit', month: 'numeric', day: 'numeric' }
-
-  try {
-      return new Date(dateString).toLocaleDateString(undefined, options)
-  } catch (e) {
-      return dateString; // Return original if formatting fails
-  }
-}
-
-// Example: Get color based on return value
-function getReturnColor(returnValue) {
-    if (returnValue === null || returnValue === undefined) return '';
-    return returnValue >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400';
-}
+const { note, sortedData, sortBy, sortDirection, sortKey, toggleNotes, view } = useTradeTable(props)
 </script>

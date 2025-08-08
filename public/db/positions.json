@@ -14,8 +14,8 @@
     "ticker": "PHYS"
   },
   {
-    "currency": "JPY",
-    "currentPrice": 11.01,
+    "currency": "USD",
+    "currentPrice": 5,
     "description": "Initial position established due to strong performance in the services sector and anticipation of new product cycle.",
     "entryDate": "June 10, 2024",
     "entryPrice": 120,
@@ -24,7 +24,7 @@
     "lastUpdated": "2025-06-23T02:44:12.696Z",
     "longShort": "Long",
     "name": "Alibaba",
-    "shares": 100,
+    "shares": 1000,
     "ticker": "BABA"
   },
   {
@@ -38,7 +38,7 @@
     "lastUpdated": "2025-06-23T02:44:12.696Z",
     "longShort": "Long",
     "name": "Tesla",
-    "shares": 200,
+    "shares": 10,
     "ticker": "TSLA"
   },
   {
@@ -60,7 +60,7 @@
     "entryDate": "July 8, 2023",
     "entryPrice": 100,
     "exitDate": "March 11, 2024",
-    "exitPrice": 200.25,
+    "exitPrice": 2.25,
     "lastUpdated": null,
     "longShort": "Short",
     "name": "JD",

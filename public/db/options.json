@@ -1,0 +1,38 @@
+[
+  {
+    "ticker": "SPY",
+    "type": "Call",
+    "strikePrice": 530.00,
+    "expiryDate": "2025-09-19",
+    "entryPrice": 15.50,
+    "currentPrice": 18.75,
+    "returnPercent": 0.209,
+    "description": "Long call initiated as a bullish position on the broader market.",
+    "currency": "USD",
+    "exitDate": null
+  },
+  {
+    "ticker": "SPY",
+    "type": "Call",
+    "strikePrice": 530.00,
+    "expiryDate": "2025-09-19",
+    "entryPrice": 15.50,
+    "currentPrice": 18.75,
+    "returnPercent": 0.209,
+    "description": "Long call initiated as a bullish position on the broader market.",
+    "currency": "USD",
+    "exitDate": "December 6, 2024"
+  },
+  {
+    "ticker": "TSLA",
+    "type": "Put",
+    "strikePrice": 530.00,
+    "expiryDate": "2025-09-19",
+    "entryPrice": 8.00,
+    "currentPrice": 288.75,
+    "returnPercent": 0.209,
+    "description": "Long call initiated as a bullish position on the broader market.",
+    "currency": "USD",
+    "exitDate": "August 8, 2024"
+  }
+]
